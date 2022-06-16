@@ -1,100 +1,49 @@
 class Nodo {
-    constructor(valor, padre = null) {
+    constructor(valor) {
         this.value = valor,
-            this.padre = padre
-        this.izquierda = null,
+            this.izquierda = null,
             this.derecha = null
     }
 }
 
 class ArbolBinario {
     constructor() {
-        this.raiz = null,
-            this.hojas = 0,
-            this.nodos = 0,
-            this.arbolAux,
-            this.nivel
+        this.raiz = null
     }
 
-    insertar(value, nodo = this.raiz) {
+    insertar(value) {
 
-        let nodoActual = nodo
         let nuevoNodo = new Nodo(value)
 
-        if (!nodoActual) {
-
+        if (this.raiz == null) {
             this.raiz = nuevoNodo
-            this.hojas++
-                this.nodos++
-
         } else {
-
-
-            if (!nodoActual.izquierda) {
-
-                nuevoNodo.padre = nodoActual
-                nodoActual.izquierda = nuevoNodo
-                this.nodos++
-
-            } else if (!nodoActual.derecha) {
-
-                nuevoNodo.padre = nodoActual
-                nodoActual.derecha = nuevoNodo
-                this.hojas++
-                    this.nodos++
-
-            } else {
-
-                if ((nodoActual.izquierda.value.length > value.length) || (nodoActual.izquierda.value > value)) {
-                    nodoActual = nodoActual.izquierda
-                } else {
-                    nodoActual = nodoActual.derecha
-                }
-
-                this.insertar(value, nodoActual)
-
-            }
-
+            this.insertarNodo(this.raiz, nuevoNodo)
         }
 
     }
 
-    buscar(elemento, nodo = null) {
+    insertarNodo(nodo, nuevoNodo) {
 
-        if (!this.arbolAux) {
-            this.arbolAux = this.raiz
-            this.nivel = 0
-            nodo = this.arbolAux
-        }
+        if (nuevoNodo.value < nodo.value) {
 
-        if (!nodo) return -1
-
-        if (elemento == nodo.value) {
-
-            this.arbolAux = null
-            return this.nivel
-
-        } else if (nodo.izquierda) {
-
-            nodo = nodo.izquierda
-            return this.buscar(elemento, nodo)
-
-        } else if (nodo.derecha) {
-
-            nodo = nodo.derecha
-            return this.buscar(elemento, nodo)
+            if (!nodo.izquierda) nodo.izquierda = nuevoNodo
+            else this.insertarNodo(nodo.izquierda, nuevoNodo)
 
         } else {
 
-            nodo = nodo.padre
-            console.log(nodo.padre)
-            nodo.izquierda = null
-            nodo.derecha = null
-            this.nivel -= 1
-            return this.buscar(elemento, nodo)
+            if (!nodo.derecha) nodo.derecha = nuevoNodo
+            else this.insertarNodo(nodo.derecha, nuevoNodo)
 
         }
+    }
 
+    inOrden(nodo) {
+        if (nodo !== null) {
+            this.inOrden(nodo.izquierda)
+            console.log(nodo.value)
+            this.inOrden(nodo.derecha)
+        }
     }
 
 }
@@ -103,15 +52,13 @@ module.exports = {
     ArbolBinario
 }
 
-// let arbol = new arbolBinario()
+let arbol = new ArbolBinario()
 
-// arbol.insertar(2)
-// arbol.insertar(4)
-// arbol.insertar(3)
-// arbol.insertar(5)
-// arbol.insertar(14)
-// arbol.insertar(22)
-// arbol.insertar(71)
-// arbol.insertar(52)
-
-// console.log(arbol.buscar(4));
+arbol.insertar(7)
+arbol.insertar(5)
+arbol.insertar(11)
+arbol.insertar(6)
+arbol.insertar(1)
+arbol.insertar(13)
+arbol.insertar(3)
+console.log(arbol.inOrden(arbol.raiz));
