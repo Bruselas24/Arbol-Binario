@@ -78,11 +78,38 @@ const añadirOtroElemento = async() => {
 const mostrarHojasYNodos = async(hojas, nodos) => {
 
     const output = [{
-        type: 'confirm',
+        type: 'alert',
         name: 'value',
-        message: `el arbol tiene ${nodos} nodos y ${hojas} hojas \n Presione enter para continuar`,
-        choices: []
+        message: `el arbol tiene ${nodos} nodos y ${hojas} hojas \n Presione enter para continuar`
     }]
+
+    await inquirer.prompt(output)
+    return
+
+}
+
+const buscarValor = async(nivel) => {
+
+    let output
+
+
+    if (nivel == -1) {
+        output = [{
+            type: 'confirm',
+            name: 'value',
+            message: `No se encontro el valor`,
+            suffix: '',
+            choices: []
+        }]
+    } else {
+        output = [{
+            type: 'confirm',
+            name: 'value',
+            message: `el valor se encuentra en el nivel ${nivel}`,
+            choices: []
+        }]
+    }
+
 
     await inquirer.prompt(output)
     return
@@ -94,5 +121,6 @@ module.exports = {
     menu,
     ingresaElemento,
     añadirOtroElemento,
-    mostrarHojasYNodos
+    mostrarHojasYNodos,
+    buscarValor
 }
