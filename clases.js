@@ -36,14 +36,28 @@ class ArbolBinario {
             else this.insertarNodo(nodo.derecha, nuevoNodo)
 
         }
+
     }
 
-    inOrden(nodo) {
+    inOrden(nodo, cb) {
         if (nodo !== null) {
-            this.inOrden(nodo.izquierda)
-            console.log(nodo.value)
-            this.inOrden(nodo.derecha)
+            this.inOrden(nodo.izquierda, cb)
+            cb.call(null, nodo)
+            this.inOrden(nodo.derecha, cb)
         }
+    }
+
+    buscarNodo(nodo, data) {
+
+        if (nodo === null) return null
+        else if (data < nodo.value) {
+            return this.buscarNodo(nodo.izquierda, data)
+        } else if (data > nodo.value) {
+            return this.buscarNodo(nodo.derecha, data)
+        } else {
+            return nodo
+        }
+
     }
 
 }
@@ -51,14 +65,3 @@ class ArbolBinario {
 module.exports = {
     ArbolBinario
 }
-
-let arbol = new ArbolBinario()
-
-arbol.insertar(7)
-arbol.insertar(5)
-arbol.insertar(11)
-arbol.insertar(6)
-arbol.insertar(1)
-arbol.insertar(13)
-arbol.insertar(3)
-console.log(arbol.inOrden(arbol.raiz));
