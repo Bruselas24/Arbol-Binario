@@ -1,5 +1,5 @@
 const { ArbolBinario } = require('./clases')
-const { menu, ingresaElemento, añadirOtroElemento, mostrarHojasYNodos } = require('./menu')
+const { menu, ingresaElemento, añadirOtroElemento, mostrarHojasYNodos, buscarValor } = require('./menu')
 
 const main = async() => {
 
@@ -15,17 +15,17 @@ const main = async() => {
 
                 let resp = await ingresaElemento()
                 arbol.insertar(resp)
-                console.log(arbol);
 
             } while (await añadirOtroElemento() == 'Si')
 
         } else if (opcion == 2) {
 
-            console.log('Todavia no anda capo')
+            let resp = await ingresaElemento()
+            await buscarValor(arbol.buscarNodo(arbol.raiz, resp))
 
         } else if (opcion == 3) {
 
-            await mostrarHojasYNodos(arbol.hojas, arbol.nodos)
+            await mostrarHojasYNodos(arbol)
 
         } else {
             break
