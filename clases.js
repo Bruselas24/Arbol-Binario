@@ -8,7 +8,9 @@ class Nodo {
 
 class ArbolBinario {
     constructor() {
-        this.raiz = null
+        this.raiz = null,
+            this.nodos = 0,
+            this.hojas = 0
     }
 
     insertar(value) {
@@ -17,6 +19,8 @@ class ArbolBinario {
 
         if (this.raiz == null) {
             this.raiz = nuevoNodo
+            this.nodos++
+                this.hojas++
         } else {
             this.insertarNodo(this.raiz, nuevoNodo)
         }
@@ -27,13 +31,17 @@ class ArbolBinario {
 
         if (nuevoNodo.value < nodo.value) {
 
-            if (!nodo.izquierda) nodo.izquierda = nuevoNodo
-            else this.insertarNodo(nodo.izquierda, nuevoNodo)
+            if (!nodo.izquierda) {
+                nodo.izquierda = nuevoNodo
+                this.nodos++
+            } else this.insertarNodo(nodo.izquierda, nuevoNodo)
 
         } else {
 
-            if (!nodo.derecha) nodo.derecha = nuevoNodo
-            else this.insertarNodo(nodo.derecha, nuevoNodo)
+            if (!nodo.derecha) {
+                nodo.derecha = nuevoNodo
+                this.nodos++
+            } else this.insertarNodo(nodo.derecha, nuevoNodo)
 
         }
 
@@ -45,6 +53,19 @@ class ArbolBinario {
             cb.call(null, nodo)
             this.inOrden(nodo.derecha, cb)
         }
+    }
+
+    cantidadHojas() {
+
+        let hojas = 0
+
+        this.inOrden(this.raiz, (nodo) => {
+            if (!nodo.izquierda && !nodo.derecha) {
+                hojas++
+            }
+        })
+
+        return hojas
     }
 
     buscarNodo(nodo, data) {
@@ -65,3 +86,17 @@ class ArbolBinario {
 module.exports = {
     ArbolBinario
 }
+
+// let a = new ArbolBinario()
+// a.insertar(10)
+// a.insertar(5)
+// a.insertar(4)
+// a.insertar(12)
+// a.insertar(11)
+// a.insertar(21)
+// a.insertar(2)
+// a.insertar(9)
+// a.insertar(99)
+
+// console.log(a.nodos)
+// console.log(a.cantidadHojas())
