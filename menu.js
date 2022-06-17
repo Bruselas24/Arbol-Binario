@@ -11,7 +11,7 @@ const menu = async() => {
             },
             {
                 value: '2',
-                name: '2.Buscar Elemento (proximamente xd)'
+                name: '2.Buscar Elemento'
             },
             {
                 value: '3',
@@ -75,12 +75,12 @@ const añadirOtroElemento = async() => {
 
 }
 
-const mostrarHojasYNodos = async(hojas, nodos) => {
+const mostrarHojasYNodos = async(arbol) => {
 
     const output = [{
-        type: 'alert',
+        type: 'input',
         name: 'value',
-        message: `el arbol tiene ${nodos} nodos y ${hojas} hojas \n Presione enter para continuar`
+        message: `El arbol tiene ${arbol.nodos} nodos y ${arbol.cantidadHojas()} hojas`
     }]
 
     await inquirer.prompt(output)
@@ -88,16 +88,16 @@ const mostrarHojasYNodos = async(hojas, nodos) => {
 
 }
 
-const buscarValor = async(nivel) => {
+const buscarValor = async(nodo) => {
 
     let output
 
 
-    if (nivel == -1) {
+    if (nodo == null) {
         output = [{
             type: 'confirm',
             name: 'value',
-            message: `No se encontro el valor`,
+            message: `No se encontro el nodo`,
             suffix: '',
             choices: []
         }]
@@ -105,7 +105,9 @@ const buscarValor = async(nivel) => {
         output = [{
             type: 'confirm',
             name: 'value',
-            message: `el valor se encuentra en el nivel ${nivel}`,
+            message: `Informacion del nodo \n Valor: ${nodo.value}
+ Izquierda: ${nodo.izquierda ? nodo.constructor.name : 'Nada'}
+ Derecha: ${nodo.derecha ? nodo.constructor.name : 'Nada'} \n`,
             choices: []
         }]
     }
